@@ -86,7 +86,7 @@ https://app.notion.com/p/Astratera-Weltentor-Guide-401dbb69c39281da9587e72a966c0
 
 ## Try the demo project
 
-This repo (and the separate `WeltenWeber-DM-Tool-sample-project.zip` on the Releases page) contains `sample_project/` and
+This repo (and the separate `Astratera-Weltentor-sample-project.zip` on the Releases page) contains `sample_project/` and
 `sample_libraries/`: a small sci-fi demo with scenes, layouts, music and sound effects.
 
 1. Top bar → **📁 Browse…** → pick the `sample_project` folder (the folder that *contains* the session folders).
@@ -145,12 +145,12 @@ External tools can drive the app (scenes, layouts, music, genre tracks, playlist
 
 ## License
 
-The source code of WeltenWeber DM Tool is MIT – see [LICENSE](LICENSE). The demo content is explained under
+The source code of Astratera-Weltentor is MIT – see [LICENSE](LICENSE). The demo content is explained under
 *Try the demo project* above.
 
 The Windows download bundles third-party software that keeps its own licenses. Because it includes PyQt6 (GPL-3.0),
 the bundled Windows binaries are distributed under the terms of the GPL-3.0. VLC / libVLC, ffmpeg and others are
 LGPL/GPL as well. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the full list and where to get the source.
 
-*WeltenWeber DM Tool is an unofficial, fan-made tool. It is not affiliated with or endorsed by Wizards of the Coast.
+*Astratera Weltentor is an unofficial, fan-made tool. It is not affiliated with or endorsed by Wizards of the Coast.
 Dungeons & Dragons and D&D are trademarks of Wizards of the Coast LLC.*
