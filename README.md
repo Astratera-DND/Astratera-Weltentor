@@ -2,7 +2,7 @@
 
 # Astratera Weltentor
 
-**Astratera Weltentor: one click per scene. **
+**Astratera Weltentor: one click per scene.**
 Each scene bundles music, ambient SFX, concept art and light scenes. 
 Hit START ALL and the whole table changes mood. 
 Includes a session recorder with scene markers, a break mode, and a small demo project to try right away.
