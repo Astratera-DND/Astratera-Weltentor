@@ -15,7 +15,7 @@ The tool is free and open source, so enjoy and happy DM'ing.
 
 
 Full Documentation: 
-https://app.notion.com/p/WeltenWeber-DM-Tool-Guide-401dbb69c39281da9587e72a966c0c0a?source=copy_link
+https://app.notion.com/p/Astratera-Weltentor-Guide-401dbb69c39281da9587e72a966c0c0a
 
 ## What it can do
 
