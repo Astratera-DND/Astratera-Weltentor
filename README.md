@@ -2,10 +2,10 @@
 
 # Astratera Weltentor
 
-**One screen to run your whole table.** 
-A tool that allows you to have full control over your sessions music, sound fx, light scenes, concept art and much much more. Its based on a scene by scene system and allows you to quickly switch from one to the next with just one click. 
-
-I worked on it for several months testing it on my own homebrew DND campaign. It turned from a simple playlist manager to something way more robust so I hope sharing it helps at least one DM outthere to have a fun session. 
+**Astratera Weltentor: one click per scene. **
+Each scene bundles music, ambient SFX, concept art and light scenes. 
+Hit START ALL and the whole table changes mood. 
+Includes a session recorder with scene markers, a break mode, and a small demo project to try right away.
 
 The tool is free and open source, so enjoy and happy DM'ing.
 
