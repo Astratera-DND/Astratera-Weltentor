@@ -1,6 +1,6 @@
-<p align="center"><img src="assets/icon.png" alt="WeltenWeber icon" width="110"></p>
+<p align="center"><img src="assets/icon.png" alt="Weltentor icon" width="110"></p>
 
-# WeltenWeber DM Tool
+# Astratera Weltentor
 
 **One screen to run your whole table.** 
 A tool that allows you to have full control over your sessions music, sound fx, light scenes, concept art and much much more. Its based on a scene by scene system and allows you to quickly switch from one to the next with just one click. 
@@ -9,7 +9,7 @@ I worked on it for several months testing it on my own homebrew DND campaign. It
 
 The tool is free and open source, so enjoy and happy DM'ing.
 
-![The WeltenWeber DM Tool main window](docs/images/main-window.png)
+![Astratera Weltentor main window](docs/images/main-window.png)
 
 **[⬇️ Download for Windows](../../releases/latest)** (no installation, just unzip and start)
 
@@ -78,9 +78,9 @@ https://app.notion.com/p/WeltenWeber-DM-Tool-Guide-401dbb69c39281da9587e72a966c0
 
 ## Download (no Python needed)
 
-1. Open the **[Releases](../../releases)** page and download `WeltenWeber-DM-Tool-win64.zip`
+1. Open the **[Releases](../../releases)** page and download `Astratera-Weltentor.zip`
    (or the latest run under *Actions → Build portable Windows version → Artifacts*).
-2. Unzip anywhere (USB stick works) and run `WeltenWeber-DM-Tool.exe`. The first start can take a few seconds.
+2. Unzip anywhere (USB stick works) and run `Astratera-Weltentor.exe`. The first start can take a few seconds.
    VLC is bundled – nothing to install.
 3. Windows SmartScreen / antivirus may warn about an unsigned PyInstaller exe: *More info → Run anyway*.
 

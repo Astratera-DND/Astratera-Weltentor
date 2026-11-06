@@ -2,9 +2,9 @@
 
 ## Download and start
 
-1. Go to the **Releases** page of the project on GitHub and download `WeltenWeber-DM-Tool-win64.zip`.
+1. Go to the **Releases** page of the project on GitHub and download `Astratera-Weltentor-win64.zip`.
 2. Unzip it anywhere you like (a USB stick works too).
-3. Double-click `WeltenWeber-DM-Tool.exe`. The first start can take a few seconds.
+3. Double-click `Astratera-Weltentor.exe`. The first start can take a few seconds.
 
 You don't need to install anything else. The audio player (VLC) is already inside.
 

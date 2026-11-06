@@ -37,7 +37,7 @@ jobs:
           $mode = "--onefile"
           if ("${{ inputs.onefile }}" -eq "false") { $mode = "--onedir" }
           python -m PyInstaller --noconfirm --clean --noconsole $mode `
-            --name WeltenWeber-DM-Tool `
+            --name Astratera-Weltentor `
             --icon assets/icon.ico `
             --add-data "assets;assets" `
             --add-data "vlc_bundle;vlc" `
@@ -50,16 +50,13 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory release | Out-Null
-          if (Test-Path dist\WeltenWeber-DM-Tool) {
-            Copy-Item dist\WeltenWeber-DM-Tool release\WeltenWeber-DM-Tool -Recurse
+          if (Test-Path dist\Astratera-Weltentor) {
+            Copy-Item dist\Astratera-Weltentor release\Astratera-Weltentor -Recurse
           } else {
-            Copy-Item dist\WeltenWeber-DM-Tool.exe release\
+            Copy-Item dist\Astratera-Weltentor.exe release\
           }
           Copy-Item README.md release\README.md
-          Copy-Item LICENSE release\LICENSE.txt
-          Copy-Item THIRD_PARTY_NOTICES.md release\THIRD_PARTY_NOTICES.md
-          if (Test-Path vlc_extract\vlc-3.0.21\COPYING.txt) { Copy-Item vlc_extract\vlc-3.0.21\COPYING.txt release\VLC-COPYING.txt }
-          Compress-Archive -Path release\* -DestinationPath WeltenWeber-DM-Tool-win64.zip
+          Compress-Archive -Path release\* -DestinationPath Astratera-Weltentor-win64.zip
 
       # Download 2: the optional sample project + sample sound libraries, on their own
       - name: Package the sample project (separate zip)
@@ -70,17 +67,17 @@ jobs:
             Write-Host "::warning::Neither sample_project nor sample_libraries was found, so no sample zip was made."
             exit 0
           }
-          Compress-Archive -Path $items -DestinationPath WeltenWeber-DM-Tool-sample-project.zip
+          Compress-Archive -Path $items -DestinationPath Astratera-Weltentor-sample-project.zip
 
       - uses: actions/upload-artifact@v4
         with:
-          name: WeltenWeber-DM-Tool-win64
-          path: WeltenWeber-DM-Tool-win64.zip
+          name: Astratera-Weltentor-win64
+          path: Astratera-Weltentor-win64.zip
 
       - uses: actions/upload-artifact@v4
         with:
-          name: WeltenWeber-DM-Tool-sample-project
-          path: WeltenWeber-DM-Tool-sample-project.zip
+          name: Astratera-Weltentor-sample-project
+          path: Astratera-Weltentor-sample-project.zip
           if-no-files-found: ignore
 
       # Release builds: the zips are added to the release you just published.
@@ -91,5 +88,5 @@ jobs:
         with:
           tag_name: ${{ github.event.release.tag_name }}
           files: |
-            WeltenWeber-DM-Tool-win64.zip
-            WeltenWeber-DM-Tool-sample-project.zip
+            Astratera-Weltentor-win64.zip
+            Astratera-Weltentor-sample-project.zip

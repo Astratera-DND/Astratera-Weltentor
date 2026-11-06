@@ -39,7 +39,7 @@ from PyQt6.QtCore import Qt, QPoint, QPointF, pyqtSignal, QObject, QUrl, QTimer,
 ###pip install sounddevice soundfile
 ###convert to exe
 ####pip install pyinstaller
-####pyinstaller --noconsole --onefile --name "WeltenWeber_DnD_Director" main.py
+####pyinstaller --noconsole --onefile --name "Astratera-Weltentor" main.py
 
 
 # --- CRASH LOGGER SETUP ---
@@ -2266,7 +2266,7 @@ class DirectorApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.is_loading = False
-        self.setWindowTitle("Welten Weber v14- DM Tool");
+        self.setWindowTitle("Astratera Weltentor v14 - DM Tool");
         self.resize(1600, 950);
         self.setStyleSheet(DARK_STYLE)
         self.config = self.load_config()
@@ -6740,7 +6740,7 @@ if __name__ == "__main__":
             pass
     try:
         # own taskbar identity so Windows shows OUR icon instead of the generic Python one
-        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("WeltenWeber.DMTool")
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("Astratera.Weltentor")
     except Exception:
         pass
     app = QApplication(sys.argv);
