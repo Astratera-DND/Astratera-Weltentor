@@ -1,0 +1,27 @@
+# machine-specific settings & logs (created next to main.py / the exe)
+director_config.json
+director_remote_command.json
+crash.log
+portable_backup_*/
+
+# speech engine + models downloaded by the Transcribe window (large)
+transcription/
+
+# python / build
+__pycache__/
+*.pyc
+.venv/
+venv/
+build/
+dist/
+vlc_bundle/
+*.spec
+
+# editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# temp files the app writes atomically
+*.tmp

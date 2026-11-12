@@ -5,3 +5,5 @@ soundfile>=0.12
 numpy>=1.26
 # ffmpeg for the waveform previews (used if no ffmpeg is found next to the app / on PATH)
 imageio-ffmpeg>=0.5
+# who is speaking in the transcripts (voice recognition; about 25 MB, runs locally)
+sherpa-onnx>=1.10

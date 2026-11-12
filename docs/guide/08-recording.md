@@ -5,6 +5,9 @@ It's great for session recaps, or for turning the audio into notes afterwards.
 
 ![Recording bar](../images/recording-bar.png)
 
+The top row shows the bar before a recording, the bottom row while recording. **Pause**, **End**, **Mark** and the timer only appear while a recording runs.
+**☕ BREAK** (with its ⚙ for the break folders) and **📝 Transcribe** stay where they are.
+
 ## Start
 
 1. Press **⏺ Record Session**.
@@ -12,7 +15,7 @@ It's great for session recaps, or for turning the audio into notes afterwards.
    * **Filename:** suggested as today's date plus `_session`. Change it if you like.
    * **Save recordings to folder:** where the files go. The tool remembers it for next time.
    * **Input device:** pick your microphone (the table mic or audio interface).
-3. Press **⏺ Start Recording**. The timer in the top right starts counting.
+3. Press **⏺ Start Recording**. The Record button is replaced by Pause, End, Mark and the timer, which starts counting.
 
 ![Recording setup](../images/recording-dialog.png)
 
@@ -45,6 +48,11 @@ In your recording folder you'll find a new folder named like `2026-10-22_session
   Handy for finding that one cool fight track again, or for building a track list of the evening. It only writes when something starts, so it costs nothing while you play.
 
 The audio is saved as mono 44.1 kHz WAV (uncompressed), so the files are large: roughly 300 MB per hour. Convert them to MP3 afterwards if you want to archive them.
+
+## Turn it into text
+
+The **📝 Transcribe** button turns the recording into a text on your own PC. It can label who is speaking and weaves your markers and scene changes into the text.
+See [Transcribing your session](14-transcription.md).
 
 ## Tips
 

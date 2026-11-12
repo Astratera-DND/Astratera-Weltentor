@@ -33,6 +33,9 @@ https://app.notion.com/p/Astratera-Weltentor-Guide-401dbb69c39281da9587e72a966c0
 * ⏺ **Session recording with markers:** record the table audio in safe 30-minute chunks, drop 📍 marks with **Ctrl+M**.
   Layout changes and breaks are marked for you.
 * 🗔 **Mini controls:** a small always-on-top window with next scene, next layout and music buttons.
+* 📝 **Transcription:** turn the recording into text on your own PC (whisper.cpp, nothing is uploaded). A special-words list
+  (typed, imported from Kurator, or built-in D&D terms) keeps names spelled right, and the tool can label **who is speaking**,
+  with player names or as Speaker N / Unknown N. Scene changes and markers are woven into the text.
 * 📜 **Light scripts:** send saved web requests (for example to smart lights) when a scene starts.
 * 🧳 **Portable projects:** everything is saved with relative paths, so you can copy your sessions folder to another PC.
 * 📡 **Remote control:** other tools can drive the app, see [docs/REMOTE_API.md](docs/REMOTE_API.md).
@@ -46,7 +49,7 @@ https://app.notion.com/p/Astratera-Weltentor-Guide-401dbb69c39281da9587e72a966c0
 | # | Where | What it does |
 |---|---|---|
 | 1 | Top bar | Choose your **sessions folder** with *Browse…*. 🧳 makes an older project portable. *Mini Controls* opens the small window. |
-| 2 | Record and break bar | **☕ BREAK**, **⏺ Record Session**, pause, end, and **📍 Mark** |
+| 2 | Record and break bar | **☕ BREAK**, **⏺ Record Session**, pause, end and **📍 Mark** (these three appear while recording), and **📝 Transcribe** |
 | 3 | Sessions and scenes | Your campaign. **+** makes a new session or scene. |
 | 4 | Music | Scene folder, genre library or playlist, waveform and the Reorder / Filter / Playlist window |
 | 5 | SFX and Quick Fire | Looping sounds, plus one-shot sounds on a **FIRE** button |
@@ -74,6 +77,7 @@ https://app.notion.com/p/Astratera-Weltentor-Guide-401dbb69c39281da9587e72a966c0
 ## Documentation
 
 * A friendly **panel-by-panel guide** lives in [`docs/guide/`](docs/guide/README.md).
+* Turning recordings into text: [Transcribing your session](docs/guide/14-transcription.md).
 * Remote control for other tools: [docs/REMOTE_API.md](docs/REMOTE_API.md).
 
 ## Download (no Python needed)
@@ -107,6 +111,9 @@ python -m venv .venv && .venv\Scripts\activate        # Windows
 pip install -r requirements.txt
 python main.py
 ```
+Transcription works from source too. The speaker labels need the voice component `sherpa-onnx`, which is listed in `requirements.txt`
+(the transcribe window also offers to install it). The speech engine and the models are downloaded from inside the app on first use.
+
 From source, VLC is picked up from a `vlc` folder next to `main.py` (run `python tools/fetch_vlc.py` to create `vlc_bundle`, rename it to `vlc`) or from a normal 64-bit VLC install.
 
 ## Folder layout & portability
@@ -141,7 +148,8 @@ External tools can drive the app (scenes, layouts, music, genre tracks, playlist
 
 ## Files the app creates (ignored by git)
 
-`director_config.json` (your paths), `crash.log`, `director_remote_command.json`, `portable_backup_*`.
+`director_config.json` (your paths), `crash.log`, `director_remote_command.json`, `portable_backup_*`, and `transcription/`
+(the downloaded speech engine and models, the voice model, and your players with their voice samples).
 
 ## License
 
@@ -151,6 +159,11 @@ The source code of Astratera-Weltentor is MIT – see [LICENSE](LICENSE). The de
 The Windows download bundles third-party software that keeps its own licenses. Because it includes PyQt6 (GPL-3.0),
 the bundled Windows binaries are distributed under the terms of the GPL-3.0. VLC / libVLC, ffmpeg and others are
 LGPL/GPL as well. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the full list and where to get the source.
+
+The **transcription** feature downloads these on first use. They keep their own licenses: whisper.cpp and the OpenAI Whisper models (MIT),
+the Silero voice-activity model (MIT), sherpa-onnx (Apache-2.0) and the NVIDIA NeMo TitaNet speaker model (CC-BY-4.0).
+The built-in English D&D term list uses names from the System Reference Document 5.1 by Wizards of the Coast LLC, available under the
+[Creative Commons Attribution 4.0 license](https://creativecommons.org/licenses/by/4.0/legalcode).
 
 *Astratera Weltentor is an unofficial, fan-made tool. It is not affiliated with or endorsed by Wizards of the Coast.
 Dungeons & Dragons and D&D are trademarks of Wizards of the Coast LLC.*

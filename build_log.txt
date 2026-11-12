@@ -1,0 +1,116 @@
+Build started 11/11/2026  7:51:05,32 
+Python 3.9.7
+Requirement already satisfied: PyQt6>=6.6 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from -r requirements.txt (line 1)) (6.10.2)
+Requirement already satisfied: python-vlc>=3.0.21203 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from -r requirements.txt (line 2)) (3.0.21203)
+Requirement already satisfied: sounddevice>=0.4.6 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from -r requirements.txt (line 3)) (0.5.6)
+Requirement already satisfied: soundfile>=0.12 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from -r requirements.txt (line 4)) (0.13.1)
+Requirement already satisfied: numpy>=1.26 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from -r requirements.txt (line 5)) (2.0.2)
+Requirement already satisfied: imageio-ffmpeg>=0.5 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from -r requirements.txt (line 7)) (0.6.0)
+Requirement already satisfied: sherpa-onnx>=1.10 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from -r requirements.txt (line 9)) (2.0.1)
+Requirement already satisfied: pyinstaller>=6.6 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from -r requirements-dev.txt (line 2)) (6.22.3)
+Requirement already satisfied: Pillow>=10.1 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from -r requirements-dev.txt (line 3)) (11.3.0)
+Requirement already satisfied: PyQt6-sip<14,>=13.8 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from PyQt6>=6.6->-r requirements.txt (line 1)) (13.10.2)
+Requirement already satisfied: PyQt6-Qt6<6.11.0,>=6.10.0 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from PyQt6>=6.6->-r requirements.txt (line 1)) (6.10.2)
+Requirement already satisfied: cffi in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from sounddevice>=0.4.6->-r requirements.txt (line 3)) (1.16.0)
+Requirement already satisfied: sherpa-onnx-core==2.0.1 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from sherpa-onnx>=1.10->-r requirements.txt (line 9)) (2.0.1)
+Requirement already satisfied: pywin32-ctypes>=0.2.1 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from pyinstaller>=6.6->-r requirements-dev.txt (line 2)) (0.2.2)
+Requirement already satisfied: packaging>=22.0 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from pyinstaller>=6.6->-r requirements-dev.txt (line 2)) (23.2)
+Requirement already satisfied: importlib-metadata>=4.6 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from pyinstaller>=6.6->-r requirements-dev.txt (line 2)) (6.8.0)
+Requirement already satisfied: pefile>=2022.5.30 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from pyinstaller>=6.6->-r requirements-dev.txt (line 2)) (2023.2.7)
+Requirement already satisfied: altgraph in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from pyinstaller>=6.6->-r requirements-dev.txt (line 2)) (0.17.4)
+Requirement already satisfied: setuptools>=42.0.0 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from pyinstaller>=6.6->-r requirements-dev.txt (line 2)) (68.2.2)
+Requirement already satisfied: pyinstaller-hooks-contrib>=2026.7 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from pyinstaller>=6.6->-r requirements-dev.txt (line 2)) (2026.9)
+Requirement already satisfied: pycparser in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from cffi->sounddevice>=0.4.6->-r requirements.txt (line 3)) (2.21)
+Requirement already satisfied: zipp>=0.5 in c:\users\obiwankenobi\appdata\local\programs\python\python39\lib\site-packages (from importlib-metadata>=4.6->pyinstaller>=6.6->-r requirements-dev.txt (line 2)) (3.17.0)
+WARNING: You are using pip version 21.2.3; however, version 26.0.1 is available.
+You should consider upgrading via the 'C:\Users\ObiWanKenobi\AppData\Local\Programs\Python\Python39\python.exe -m pip install --upgrade pip' command.
+135 INFO: PyInstaller: 6.22.3, contrib hooks: 2026.9
+135 INFO: Python: 3.9.7
+141 INFO: Platform: Windows-10-10.0.19045-SP0
+141 INFO: Python environment: C:\Users\ObiWanKenobi\AppData\Local\Programs\Python\Python39
+141 INFO: wrote e:\Projekte\Hobby\DnD\Space\DND Programs\DM_Screen\Astratera-Weltentor\Astratera-Weltentor.spec
+144 INFO: Removing temporary files and cleaning cache in C:\Users\ObiWanKenobi\AppData\Local\pyinstaller
+2095 INFO: Module search paths (PYTHONPATH):
+['e:\\Projekte\\Hobby\\DnD\\Space\\DND '
+ 'Programs\\DM_Screen\\Astratera-Weltentor',
+ 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\python39.zip',
+ 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\DLLs',
+ 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib',
+ 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39',
+ 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages',
+ 'e:\\Projekte\\Hobby\\DnD\\Space\\DND '
+ 'Programs\\DM_Screen\\Astratera-Weltentor']
+2632 INFO: Appending 'binaries' from .spec
+2633 INFO: Appending 'datas' from .spec
+2687 INFO: checking Analysis
+2687 INFO: Building Analysis because Analysis-00.toc is non existent
+2687 INFO: Looking for Python shared library...
+2688 INFO: Using Python shared library: C:\Users\ObiWanKenobi\AppData\Local\Programs\Python\Python39\python39.dll
+2688 INFO: Running Analysis Analysis-00.toc
+2688 INFO: Target bytecode optimization level: 0
+2688 INFO: Initializing module dependency graph...
+2689 INFO: Initializing module graph hook caches...
+2768 INFO: Analyzing modules for base_library.zip ...
+3631 INFO: Processing standard module hook 'hook-encodings.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+3959 INFO: Processing standard module hook 'hook-math.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+4711 INFO: Processing standard module hook 'hook-pickle.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+5441 INFO: Processing standard module hook 'hook-heapq.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+6496 INFO: Caching module dependency graph...
+6527 INFO: Analyzing e:\Projekte\Hobby\DnD\Space\DND Programs\DM_Screen\Astratera-Weltentor\main.py
+6747 INFO: Processing standard module hook 'hook-sounddevice.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+6774 INFO: Processing standard module hook 'hook-platform.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+6793 INFO: Processing standard module hook 'hook-sysconfig.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+6829 INFO: Processing standard module hook 'hook-_ctypes.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+6967 INFO: Processing standard module hook 'hook-numpy.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+7893 INFO: Processing standard module hook 'hook-webbrowser.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+8675 INFO: Processing standard module hook 'hook-difflib.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+8892 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+8982 INFO: Processing standard module hook 'hook-xml.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+11097 INFO: Processing standard module hook 'hook-charset_normalizer.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+11184 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+11186 INFO: SetuptoolsInfo: initializing cached setuptools info...
+12049 INFO: Processing standard module hook 'hook-soundfile.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+12074 INFO: Processing standard module hook 'hook-PyQt6.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+12572 INFO: Processing standard module hook 'hook-PyQt6.QtCore.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+13346 INFO: Processing standard module hook 'hook-PyQt6.QtWidgets.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+13825 INFO: Processing standard module hook 'hook-PyQt6.QtGui.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+14481 INFO: Processing standard module hook 'hook-PyQt6.QtMultimedia.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+14766 INFO: Processing standard module hook 'hook-PyQt6.QtNetwork.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+15133 INFO: Processing standard module hook 'hook-imageio_ffmpeg.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+15207 INFO: Analyzing hidden import 'imageio_ffmpeg.binaries'
+15213 INFO: Processing module hooks (post-graph stage)...
+15291 INFO: Performing binary vs. data reclassification (556 entries)
+29036 INFO: Looking for ctypes DLLs
+29090 INFO: Analyzing run-time hooks ...
+29104 INFO: Including run-time hook 'pyi_rth_pyqt6.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+29112 INFO: Processing pre-find-module-path hook 'hook-_pyi_rth_utils.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
+29120 INFO: Processing standard module hook 'hook-_pyi_rth_utils.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks'
+29133 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+29140 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+29148 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+29167 INFO: Creating base_library.zip...
+29180 INFO: Looking for dynamic libraries
+29805 INFO: Extra DLL search directories (AddDllDirectory): ['C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyQt6\\Qt6\\bin', 'C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\numpy.libs']
+29806 INFO: Extra DLL search directories (PATH): ['C:\\Users\\ObiWanKenobi\\AppData\\Local\\Programs\\Python\\Python39\\lib\\site-packages\\PyQt6\\Qt6\\bin']
+32475 INFO: Warnings written to e:\Projekte\Hobby\DnD\Space\DND Programs\DM_Screen\Astratera-Weltentor\build\Astratera-Weltentor\warn-Astratera-Weltentor.txt
+32532 INFO: Graph cross-reference written to e:\Projekte\Hobby\DnD\Space\DND Programs\DM_Screen\Astratera-Weltentor\build\Astratera-Weltentor\xref-Astratera-Weltentor.html
+32595 INFO: checking PYZ
+32595 INFO: Building PYZ because PYZ-00.toc is non existent
+32595 INFO: Building PYZ (ZlibArchive) e:\Projekte\Hobby\DnD\Space\DND Programs\DM_Screen\Astratera-Weltentor\build\Astratera-Weltentor\PYZ-00.pyz
+32876 INFO: Building PYZ (ZlibArchive) e:\Projekte\Hobby\DnD\Space\DND Programs\DM_Screen\Astratera-Weltentor\build\Astratera-Weltentor\PYZ-00.pyz completed successfully.
+32894 INFO: checking PKG
+32894 INFO: Building PKG because PKG-00.toc is non existent
+32894 INFO: Building PKG (CArchive) Astratera-Weltentor.pkg
+65469 INFO: Building PKG (CArchive) Astratera-Weltentor.pkg completed successfully.
+65481 INFO: Bootloader C:\Users\ObiWanKenobi\AppData\Local\Programs\Python\Python39\lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\runw.exe
+65481 INFO: checking EXE
+65481 INFO: Building EXE because EXE-00.toc is non existent
+65481 INFO: Building EXE from EXE-00.toc
+65496 INFO: Copying bootloader EXE to e:\Projekte\Hobby\DnD\Space\DND Programs\DM_Screen\Astratera-Weltentor\dist\Astratera-Weltentor.exe
+65565 INFO: Copying icon to EXE
+65596 INFO: Copying 0 resources to EXE
+65596 INFO: Embedding manifest in EXE
+65626 INFO: Appending PKG archive to EXE
+65718 INFO: Fixing EXE headers
+66309 INFO: Building EXE from EXE-00.toc completed successfully.
+66321 INFO: Build complete! The results are available in: e:\Projekte\Hobby\DnD\Space\DND Programs\DM_Screen\Astratera-Weltentor\dist

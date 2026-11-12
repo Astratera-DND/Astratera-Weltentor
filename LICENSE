@@ -19,3 +19,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+----------------------------------------------------------------------------------------------------
+
+The MIT License above covers the source code of Astratera Weltentor only. It does not cover the demo
+music and pictures, and it does not cover third-party software and data that the program uses or downloads.
+Those keep their own licenses, see THIRD_PARTY_NOTICES.md. In short:
+
+  - The Windows download bundles PyQt6 (GPL-3.0) and VLC / libVLC (LGPL/GPL), so the bundled
+    binaries are distributed under the terms of the GPL-3.0.
+  - Transcription (downloaded by the user on first use): whisper.cpp (MIT), OpenAI Whisper models (MIT),
+    Silero VAD (MIT), sherpa-onnx (Apache-2.0), NVIDIA NeMo TitaNet speaker model (CC-BY-4.0).
+  - The English D&D term list in dnd_terms.py contains names from the System Reference Document 5.1
+    by Wizards of the Coast LLC, licensed under the Creative Commons Attribution 4.0 International
+    License (https://creativecommons.org/licenses/by/4.0/legalcode).

@@ -43,6 +43,16 @@ jobs:
             --add-data "vlc_bundle;vlc" `
             --collect-all imageio_ffmpeg `
             --hidden-import quickfire_engine `
+            --hidden-import lights `
+            --hidden-import light_designer `
+            --hidden-import transcriber `
+            --hidden-import transcribe_dialog `
+            --hidden-import vocab `
+            --hidden-import dnd_terms `
+            --hidden-import vocab_dialog `
+            --hidden-import speakers `
+            --hidden-import speakers_dialog `
+            --collect-binaries sherpa_onnx --collect-data sherpa_onnx --hidden-import sherpa_onnx --exclude-module sentencepiece `
             main.py
 
       # Download 1: the program only (exe + readme)

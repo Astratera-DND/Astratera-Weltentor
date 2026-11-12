@@ -20,5 +20,6 @@ Skim the pages you care about, and come back when you wonder "what does this but
 11. [Keyboard shortcuts](11-shortcuts.md): the cheat sheet
 12. [Moving to another PC](12-moving-between-pcs.md): copy your campaign without breaking it
 13. [Troubleshooting](13-troubleshooting.md)
+14. [Transcribing your session](14-transcription.md): recording to text, special words, who is speaking
 
 > The screenshots show the demo project that comes with the download.

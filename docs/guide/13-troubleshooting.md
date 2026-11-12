@@ -15,6 +15,8 @@ in Windows (Win+P → *Extend*) before you press the button.
 
 **The recording has no sound.** Start a new recording and pick the correct **Input device** in the setup window.
 
+**The transcript has wrong names, is slow, or mixes up speakers.** See the problem list at the end of [Transcribing your session](14-transcription.md).
+
 **It started and crashed.** Look for `crash.log` next to the program. It tells what happened. If you report an issue on GitHub, attach the file
 (check first that it holds nothing private).
 

@@ -14,6 +14,10 @@ import subprocess
 import re
 
 
+# Shown in the window title. Keep it the same as the GitHub release tag.
+APP_VERSION = "1.0.5-beta"
+
+
 def _app_dir():
     # Folder of the running script, or of the .exe once frozen by PyInstaller
     # (for a onefile build __file__ points into a temp folder that is deleted on exit).
@@ -113,7 +117,22 @@ from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QPushButton,
                              QComboBox, QGraphicsRectItem, QDoubleSpinBox, QListWidgetItem, QSplitter,
                              QTreeWidget, QTreeWidgetItem, QSizePolicy)
 from PyQt6.QtCore import Qt, QPoint, pyqtSignal, QObject, QUrl, QTimer, QRectF, QVariantAnimation, QSize
-from PyQt6.QtGui import QPixmap, QImage, QAction, QPen, QColor, QPalette, QPainter, QBrush, QShortcut, QKeySequence, QIcon
+from PyQt6.QtGui import QDesktopServices, QPixmap, QImage, QAction, QPen, QColor, QPalette, QPainter, QBrush, QShortcut, QKeySequence, QIcon
+try:
+    import lights as lights_mod                        # scripts + smart lights (Hue)
+except Exception as _lights_err:
+    lights_mod = None
+    logging.warning(f"lights.py not available: {_lights_err}")
+try:
+    import transcribe_dialog                           # 📝 local transcription of recordings (whisper.cpp)
+except Exception as _tr_err:
+    transcribe_dialog = None
+    logging.warning(f"transcribe_dialog.py not available: {_tr_err}")
+try:
+    import light_designer                              # 💡 Light Designer window (Hue)
+except Exception as _ld_err:
+    light_designer = None
+    logging.warning(f"light_designer.py not available: {_ld_err}")
 try:
     from quickfire_engine import QuickFireEngine      # optional: fast preloaded Quick Fire playback
 except Exception as _qf_err:                           # missing file / broken install -> plain VLC playback
@@ -1219,6 +1238,10 @@ class WaveformBridge(QObject):
     peaks_ready = pyqtSignal(str, list)
 
 
+class ScriptBridge(QObject):
+    finished = pyqtSignal(str, bool, int)      # message, ok, run id (helper thread -> window)
+
+
 class QuickFireEngineBridge(QObject):
     changed = pyqtSignal(str)          # engine thread -> window: "opened", "progress", "failed", ...
 
@@ -2266,7 +2289,7 @@ class DirectorApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.is_loading = False
-        self.setWindowTitle("Astratera Weltentor v14 - DM Tool");
+        self.setWindowTitle(f"Astratera Weltentor v{APP_VERSION} - DM Tool");
         self.resize(1600, 950);
         self.setStyleSheet(DARK_STYLE)
         self.config = self.load_config()
@@ -2329,6 +2352,17 @@ class DirectorApp(QMainWindow):
         self._active_video_item = None   # read by the waveform playhead timer before any video is selected
         # optional fast Quick Fire engine (preloaded sounds + always-open output). Off unless switched on in Settings.
         self.fast_quickfire = bool(config.get("fast_quickfire", False))
+        # smart lights of THIS computer (bridge address + key live here, never inside scripts)
+        _lc = config.get("lights")
+        self.lights_config = _lc if isinstance(_lc, dict) else {}
+        _tc = config.get("transcribe")
+        self.transcribe_config = _tc if isinstance(_tc, dict) else {}
+        self._transcribe_dlg = None
+        self.scripts_order = []                  # drag order of the scripts list (per scene)
+        self._script_cancel = None
+        self._script_run_id = 0
+        self._script_bridge = ScriptBridge()
+        self._script_bridge.finished.connect(self._on_script_finished)
         self.qf_engine = None
         self._qf_bridge = QuickFireEngineBridge()
         self._qf_bridge.changed.connect(self._on_qf_engine_event)
@@ -2899,6 +2933,9 @@ class DirectorApp(QMainWindow):
         self.txt_root = QLineEdit(self.root_path)
         self.txt_root.setPlaceholderText("Folder that contains your session folders...")
         self.txt_root.returnPressed.connect(self.update_root)
+        self.txt_root.setMaximumWidth(900)          # long paths scroll; the full path is in the tooltip
+        self.txt_root.setToolTip(self.root_path or "")
+        self.txt_root.textChanged.connect(self.txt_root.setToolTip)
         btn_set_root = QPushButton("📁 Browse...");
         btn_set_root.setToolTip("Select the folder that contains your session folders")
         btn_set_root.clicked.connect(self.browse_root_path);
@@ -2907,9 +2944,10 @@ class DirectorApp(QMainWindow):
         btn_portable.setToolTip("Make project portable: store file paths relative so the whole "
                                 "sessions folder can be copied to another PC")
         btn_portable.clicked.connect(self.make_project_portable)
-        path_layout.addWidget(self.txt_root);
+        path_layout.addWidget(self.txt_root, 3)
         path_layout.addWidget(btn_set_root)
         path_layout.addWidget(btn_portable)
+        path_layout.addStretch(1)      # the free space beyond the path field goes here
         btn_mini = QPushButton("🗔 MINI CONTROLS");
         btn_mini.setStyleSheet("background-color: #444; color: white; font-weight: bold;");
         btn_mini.clicked.connect(self.toggle_mini_controls);
@@ -2923,18 +2961,6 @@ class DirectorApp(QMainWindow):
         # --- SESSION RECORDING BAR ---
         rec_bar = QHBoxLayout()
         rec_bar.addStretch()
-        self.btn_break = QPushButton("☕ BREAK")
-        self.btn_break.setStyleSheet("background-color: #4a148c; color: white; font-weight: bold;")
-        self.btn_break.setCheckable(True)
-        self.btn_break.clicked.connect(self.toggle_break_mode)
-        btn_break_cfg = QPushButton("⚙")
-        btn_break_cfg.setFixedWidth(28)
-        btn_break_cfg.setToolTip("Configure break folders")
-        btn_break_cfg.clicked.connect(self.configure_break_folders)
-        rec_bar.addWidget(btn_break_cfg)
-        rec_bar.addSpacing(20)
-        rec_bar.addWidget(self.btn_break)
-        rec_bar.addSpacing(20)
         self.btn_rec_start = QPushButton("⏺ Record Session")
         self.btn_rec_start.setStyleSheet("background-color: #b71c1c; color: white; font-weight: bold;")
         self.btn_rec_start.clicked.connect(self.rec_start)
@@ -2952,11 +2978,32 @@ class DirectorApp(QMainWindow):
         self.btn_rec_mark.clicked.connect(self.rec_mark)
         self.lbl_rec_time = QLabel("00:00:00")
         self.lbl_rec_time.setStyleSheet("color: #ef9a9a; font-family: 'Consolas'; font-size: 13px; font-weight: bold;")
+        # Pause / End / Mark / timer only matter while a recording runs, so they appear with it
+        # (rec_start shows them, rec_stop hides them). Break and Transcribe stay where they are.
+        self.rec_live = QWidget()
+        live_l = QHBoxLayout(self.rec_live)
+        live_l.setContentsMargins(0, 0, 0, 0)
+        for w in (self.btn_rec_pause, self.btn_rec_stop, self.btn_rec_mark, self.lbl_rec_time):
+            live_l.addWidget(w)
+        self.rec_live.setVisible(False)
+        self.btn_break = QPushButton("☕ BREAK")
+        self.btn_break.setStyleSheet("background-color: #4a148c; color: white; font-weight: bold;")
+        self.btn_break.setCheckable(True)
+        self.btn_break.clicked.connect(self.toggle_break_mode)
+        btn_break_cfg = QPushButton("⚙")
+        btn_break_cfg.setFixedWidth(28)
+        btn_break_cfg.setToolTip("Configure break folders")
+        btn_break_cfg.clicked.connect(self.configure_break_folders)
+        self.btn_transcribe = QPushButton("📝 Transcribe")
+        self.btn_transcribe.setToolTip("Turn recorded session parts into a text transcript, locally on this PC.")
+        self.btn_transcribe.clicked.connect(self.open_transcriber)
         rec_bar.addWidget(self.btn_rec_start)
-        rec_bar.addWidget(self.btn_rec_pause)
-        rec_bar.addWidget(self.btn_rec_stop)
-        rec_bar.addWidget(self.btn_rec_mark)
-        rec_bar.addWidget(self.lbl_rec_time)
+        rec_bar.addWidget(self.rec_live)
+        rec_bar.addSpacing(20)
+        rec_bar.addWidget(self.btn_break)
+        rec_bar.addWidget(btn_break_cfg)
+        rec_bar.addSpacing(20)
+        rec_bar.addWidget(self.btn_transcribe)
         full_v_layout.addLayout(rec_bar)
         # --- END RECORDING BAR ---
 
@@ -3434,11 +3481,23 @@ class DirectorApp(QMainWindow):
         controls.addSpacing(15);
         controls.addWidget(QLabel("📜 SCRIPTS"))
         self.scripts_list = QListWidget();
+        self.scripts_list.setDragDropMode(QListWidget.DragDropMode.InternalMove)
+        self.scripts_list.model().rowsMoved.connect(self._on_scripts_reordered)
+        self.scripts_list.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.scripts_list.customContextMenuRequested.connect(self.show_scripts_context_menu)
+        self.scripts_list.itemDoubleClicked.connect(lambda *_: self.run_hue_script())
+        self.scripts_list.setToolTip("Double-click or press ▶ to run. Drag to reorder. Right-click for more.")
         controls.addWidget(self.scripts_list, 1);
+        script_row = QHBoxLayout()
         btn_start_script = QPushButton("▶ Start Script");
         btn_start_script.setStyleSheet("background-color: #673ab7; color: white; font-weight: bold;");
         btn_start_script.clicked.connect(self.run_hue_script);
-        controls.addWidget(btn_start_script);
+        script_row.addWidget(btn_start_script, 1)
+        btn_designer = QPushButton("💡 Lights")
+        btn_designer.setToolTip("Connect your Hue bridge, set up your lights and save the look as a script.")
+        btn_designer.clicked.connect(lambda: self.open_light_designer())
+        script_row.addWidget(btn_designer)
+        controls.addLayout(script_row);
         self.lbl_script_status = QLabel("Status: Idle");
         self.lbl_script_status.setStyleSheet("color: #aaa; font-size: 10px;");
         controls.addWidget(self.lbl_script_status);
@@ -5529,6 +5588,8 @@ class DirectorApp(QMainWindow):
             "blanking_all_scenes": self.blanking_all_scenes,
             "fit_projector": self.fit_projector,
             "fast_quickfire": self.fast_quickfire,
+            "lights": self.lights_config,
+            "transcribe": self.transcribe_config,
             "ui_folds": dict(self.ui_folds),
             "recording_path": self.recording_path
         }
@@ -5563,6 +5624,7 @@ class DirectorApp(QMainWindow):
             "sfx_volume": self.sfx_vol_slider.value(),
             "quickfire_volume": self.quickfire_vol_slider.value(),
             "quickfire_path": to_portable(self.quickfire_path),
+            "scripts_order": list(self.scripts_order),
             "quickfire_enabled": self.quickfire_enabled,
             "collapsed_sections": dict(self.collapsed_sections),
             "blanking_enabled": bool(self.blanking_scene_enabled),
@@ -5585,6 +5647,7 @@ class DirectorApp(QMainWindow):
         self.linked_assets = {"music": {}, "sfx": {}, "visuals": {}, "layouts": {}}
         # Default = everything expanded (also covers scenes with no saved file yet)
         self.collapsed_sections = {"music": False, "sfx": False, "visuals": False, "layouts": False}
+        self.scripts_order = []
         self._apply_all_section_collapse()
         self.blanking_scene_enabled = False      # default for scenes without the setting
         self._refresh_blanking_ui()
@@ -5653,6 +5716,8 @@ class DirectorApp(QMainWindow):
                 self._apply_all_section_collapse()
                 self.blanking_scene_enabled = bool(data.get("blanking_enabled", False))
                 self._refresh_blanking_ui()
+                _so = data.get("scripts_order", [])
+                self.scripts_order = [n for n in _so if isinstance(n, str)] if isinstance(_so, list) else []
                 saved_orders = data.get("orders", {})
                 self._restore_music_source_state(data, saved_orders)
                 self.folder_mode_orders = {
@@ -5976,6 +6041,8 @@ class DirectorApp(QMainWindow):
             if sub == "music":
                 # each source (folder / every genre) has its own remembered order
                 saved_order = self.music_orders.get(music_key, [])
+            elif sub == "scripts":
+                saved_order = list(self.scripts_order)
             else:
                 saved_order = (orders or {}).get(sub, [])
             final_list = [f for f in saved_order if f in all_files]
@@ -6075,26 +6142,196 @@ class DirectorApp(QMainWindow):
         except Exception as ex:
             logging.warning(f"Could not mark layouts with linked visuals: {ex}")
 
+    # ===== scripts: running in the background, list management =====
     def run_hue_script(self):
+        # Runs the selected script on a helper thread: an unreachable lamp or hub can no longer freeze the window.
         it = self.scripts_list.currentItem()
-        if it:
+        if not it or not self.scene_path:
+            return
+        if lights_mod is None:
+            self.lbl_script_status.setText("Error: lights.py is missing next to the program")
+            return
+        path = os.path.join(self.scene_path, "scripts", it.text())
+        if self._script_cancel is not None:
+            self._script_cancel.set()             # a script that is still running stops at its next step
+        cancel = threading.Event()
+        self._script_cancel = cancel
+        self._script_run_id += 1
+        run_id = self._script_run_id
+        cfg = json.loads(json.dumps(self.lights_config))     # private copy for the helper thread
+        self.lbl_script_status.setText(f"Status: Running {it.text()}...")
+        bridge = self._script_bridge
+
+        def work():
             try:
-                with open(os.path.join(self.scene_path, "scripts", it.text()), 'r') as f:
-                    for cmd in json.load(f):
-                        method = cmd.get("method", "PUT").upper()
-                        body = cmd.get("body", {})
-                        data = json.dumps(body).encode('utf-8') if body else None
-                        req = urllib.request.Request(
-                            cmd["url"],
-                            data=data,
-                            method=method
-                        )
-                        req.add_header('Content-Type', 'application/json')
-                        with urllib.request.urlopen(req, timeout=2): pass
-                self.lbl_script_status.setText("Status: Executed")
-                QTimer.singleShot(3000, lambda: self.lbl_script_status.setText("Status: Idle"))
+                lights_mod.run_script(path, cfg, cancel)
+                msg, ok = ("Status: Stopped" if cancel.is_set() else "Status: Executed"), True
+            except lights_mod.ScriptError as e:
+                msg, ok = f"Error: {e}", False
             except Exception as e:
-                self.lbl_script_status.setText(f"Error: {str(e)}")
+                logging.warning(f"Script failed: {lights_mod.redact(e, cfg)}")
+                msg, ok = f"Error: {lights_mod.redact(e, cfg)}", False
+            try:
+                bridge.finished.emit(msg, ok, run_id)
+            except Exception:
+                pass
+
+        threading.Thread(target=work, name="script-run", daemon=True).start()
+
+    def _on_script_finished(self, msg, ok, run_id):
+        if run_id != self._script_run_id:
+            return                                  # a newer run owns the status line now
+        self.lbl_script_status.setText(msg)
+        if ok:
+            QTimer.singleShot(3000, lambda: self.lbl_script_status.setText("Status: Idle")
+                              if run_id == self._script_run_id else None)
+
+    def open_light_designer(self, edit_name=None):
+        if light_designer is None or lights_mod is None:
+            QMessageBox.warning(self, "Light Designer", "light_designer.py / lights.py are missing next to the program.")
+            return
+        dlg = light_designer.LightDesigner(
+            self, self.lights_config, self._scripts_dir(),
+            on_cfg_changed=self._on_lights_cfg_changed, on_saved=self._on_designer_saved, edit_script=edit_name)
+        dlg.exec()
+
+    def _on_lights_cfg_changed(self, cfg):
+        self.lights_config = cfg
+        self.save_config()
+
+    def _on_designer_saved(self, name):
+        names = [self.scripts_list.item(i).text() for i in range(self.scripts_list.count())]
+        if name not in names:
+            names.append(name)
+        self.scripts_order = names
+        self.save_scene_settings()
+        self._reload_scripts_list(select=name)
+
+    def stop_script(self):
+        if self._script_cancel is not None:
+            self._script_cancel.set()
+
+    def _scripts_dir(self):
+        return os.path.join(self.scene_path, "scripts") if self.scene_path else None
+
+    def _on_scripts_reordered(self, *args):
+        if self.is_loading:
+            return
+        self.scripts_order = [self.scripts_list.item(i).text() for i in range(self.scripts_list.count())]
+        self.save_scene_settings()
+
+    def _reload_scripts_list(self, select=None):
+        # self.scripts_order is already updated by the caller
+        self.load_assets(self._capture_current_orders())
+        if select:
+            for i in range(self.scripts_list.count()):
+                if self.scripts_list.item(i).text() == select:
+                    self.scripts_list.setCurrentRow(i)
+                    break
+
+    @staticmethod
+    def _clean_script_name(name):
+        name = (name or "").strip()
+        if not name or any(c in name for c in '\\/:*?"<>|'):
+            return None
+        if not name.lower().endswith(".json"):
+            name += ".json"
+        return name
+
+    def _unique_script_name(self, base):
+        d = self._scripts_dir()
+        stem = base[:-5] if base.lower().endswith(".json") else base
+        cand, n = stem + ".json", 2
+        while os.path.exists(os.path.join(d, cand)):
+            cand = f"{stem} {n}.json"
+            n += 1
+        return cand
+
+    def rename_script(self, old):
+        d = self._scripts_dir()
+        if not d or not os.path.exists(os.path.join(d, old)):
+            return
+        new, ok = QInputDialog.getText(self, "Rename script", "New name:", text=old[:-5] if old.lower().endswith(".json") else old)
+        if not ok:
+            return
+        new = self._clean_script_name(new)
+        if not new:
+            QMessageBox.warning(self, "Rename script", "That name is not allowed (no \\ / : * ? \" < > |).")
+            return
+        if new == old:
+            return
+        if os.path.exists(os.path.join(d, new)):
+            QMessageBox.warning(self, "Rename script", f"A script called {new} already exists.")
+            return
+        try:
+            os.rename(os.path.join(d, old), os.path.join(d, new))
+        except Exception as e:
+            QMessageBox.warning(self, "Rename script", f"Could not rename: {e}")
+            return
+        self.scripts_order = [new if n == old else n for n in
+                              [self.scripts_list.item(i).text() for i in range(self.scripts_list.count())]]
+        self.save_scene_settings()
+        self._reload_scripts_list(select=new)
+
+    def duplicate_script(self, name):
+        d = self._scripts_dir()
+        src = os.path.join(d, name) if d else None
+        if not src or not os.path.exists(src):
+            return
+        new = self._unique_script_name((name[:-5] if name.lower().endswith(".json") else name) + " copy")
+        try:
+            shutil.copy2(src, os.path.join(d, new))
+        except Exception as e:
+            QMessageBox.warning(self, "Duplicate script", f"Could not copy: {e}")
+            return
+        names = [self.scripts_list.item(i).text() for i in range(self.scripts_list.count())]
+        if name in names:
+            names.insert(names.index(name) + 1, new)
+        self.scripts_order = names
+        self.save_scene_settings()
+        self._reload_scripts_list(select=new)
+
+    def delete_script(self, name):
+        d = self._scripts_dir()
+        p = os.path.join(d, name) if d else None
+        if not p or not os.path.exists(p):
+            return
+        if QMessageBox.question(self, "Delete script",
+                                f"Delete the script \"{name}\"?\nThis cannot be undone.") != QMessageBox.StandardButton.Yes:
+            return
+        try:
+            os.remove(p)
+        except Exception as e:
+            QMessageBox.warning(self, "Delete script", f"Could not delete: {e}")
+            return
+        self.scripts_order = [n for n in self.scripts_order if n != name]
+        self.save_scene_settings()
+        self._reload_scripts_list()
+
+    def open_scripts_folder(self):
+        d = self._scripts_dir()
+        if not d:
+            return
+        os.makedirs(d, exist_ok=True)
+        QDesktopServices.openUrl(QUrl.fromLocalFile(d))
+
+    def show_scripts_context_menu(self, pos):
+        if not self.scene_path:
+            return
+        it = self.scripts_list.itemAt(pos)
+        menu = QMenu()
+        if it:
+            name = it.text()
+            a = QAction("▶ Run", self); a.triggered.connect(lambda: (self.scripts_list.setCurrentItem(it), self.run_hue_script())); menu.addAction(a)
+            a = QAction("✏ Rename...", self); a.triggered.connect(lambda: self.rename_script(name)); menu.addAction(a)
+            a = QAction("💡 Edit in Light Designer...", self); a.triggered.connect(lambda: self.open_light_designer(name)); menu.addAction(a)
+            a = QAction("⧉ Duplicate", self); a.triggered.connect(lambda: self.duplicate_script(name)); menu.addAction(a)
+            a = QAction("🗑 Delete...", self); a.triggered.connect(lambda: self.delete_script(name)); menu.addAction(a)
+            menu.addSeparator()
+        a = QAction("■ Stop running script", self); a.triggered.connect(self.stop_script); menu.addAction(a)
+        a = QAction("💡 New script in Light Designer...", self); a.triggered.connect(lambda: self.open_light_designer()); menu.addAction(a)
+        a = QAction("📂 Open scripts folder", self); a.triggered.connect(self.open_scripts_folder); menu.addAction(a)
+        menu.exec(self.scripts_list.mapToGlobal(pos))
 
     def start_all_master(self):
         lay = self.layout_list.currentItem() or (self.layout_list.item(0) if self.layout_list.count() > 0 else None)
@@ -6535,7 +6772,58 @@ class DirectorApp(QMainWindow):
         self._markers.append(entry)
         self._save_markers()
 
+    def transcribing(self):
+        d = self._transcribe_dlg
+        try:
+            return bool(d is not None and d.running)
+        except Exception:
+            return False
+
+    def shutdown_transcriber(self):
+        d = self._transcribe_dlg
+        if d is not None:
+            try:
+                d.shutdown()
+            except Exception:
+                pass
+
+    def _on_transcribe_cfg(self, cfg):
+        self.transcribe_config = cfg
+        self.save_config()
+
+    def open_transcriber(self):
+        if transcribe_dialog is None:
+            QMessageBox.warning(self, "Transcribe", "transcribe_dialog.py / transcriber.py are missing next to the program.")
+            return
+        d = self._transcribe_dlg
+        try:
+            if d is not None and d.isVisible():
+                d.raise_(); d.activateWindow()
+                return
+        except RuntimeError:
+            pass
+        files = [f for f in getattr(self.recorder, "chunk_files", []) if os.path.isfile(f)] \
+            if not self.recorder.is_recording else []
+
+        def busy():
+            if self.recorder.is_recording:
+                return "A recording is running. Transcribe after the session so the recording is not disturbed."
+            return None
+
+        def playing():
+            try:
+                return bool(self.music_player.is_playing() or self.sfx_player.is_playing())
+            except Exception:
+                return False
+        self._transcribe_dlg = transcribe_dialog.TranscribeDialog(
+            self, _app_dir(), _find_ffmpeg(), self.transcribe_config, self._on_transcribe_cfg, files, busy, playing)
+        self._transcribe_dlg.show()
+
     def rec_start(self):
+        if self.transcribing():
+            QMessageBox.warning(self, "Recording", "A transcription is still running. Stop it first (📝 Transcribe > Stop) "
+                                "so it does not disturb the recording.")
+            return
         today = datetime.date.today().strftime("%Y-%m-%d")
         suggested = f"{today}_session"
         dlg = RecordingSetupDialog(self, suggested, self.recording_path)
@@ -6588,6 +6876,8 @@ class DirectorApp(QMainWindow):
 
         self._rec_timer.start(500)
         self.btn_rec_start.setEnabled(False)
+        self.btn_rec_start.setVisible(False)
+        self.rec_live.setVisible(True)
         self.btn_rec_pause.setEnabled(True)
         self.btn_rec_stop.setEnabled(True)
         self.btn_rec_mark.setEnabled(True)
@@ -6625,6 +6915,8 @@ class DirectorApp(QMainWindow):
         self._save_markers()
         self.lbl_rec_time.setText("00:00:00")
         self.btn_rec_start.setEnabled(True)
+        self.btn_rec_start.setVisible(True)
+        self.rec_live.setVisible(False)
         self.btn_rec_pause.setEnabled(False)
         self.btn_rec_pause.setText("⏸ Pause")
         self.btn_rec_pause.setStyleSheet("background-color: #555; color: white; font-weight: bold;")
@@ -6757,4 +7049,5 @@ if __name__ == "__main__":
         except Exception:
             pass
     app.aboutToQuit.connect(_qf_shutdown)
+    app.aboutToQuit.connect(window.shutdown_transcriber)
     sys.exit(app.exec())
