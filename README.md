@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/icon.png" alt="Weltentor icon" width="110"></p>
+<p align="center"><img src="assets/Astratera_Weltentor_v001_256.png" alt="Weltentor icon" width="110"></p>
 
 # Astratera Weltentor
 
