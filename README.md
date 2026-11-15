@@ -142,6 +142,15 @@ It runs **on your own PC**, nothing is uploaded, and with a mid-range NVIDIA gra
 and run it again. The second run takes seconds, because the listening is not repeated.
 The full walkthrough is in [Transcribing your session](docs/guide/14-transcription.md).
 
+## 🎧 Relive it with Astratera Chronist
+
+The recording and the transcript really shine in the companion tool **[Astratera Chronist](https://github.com/Astratera-DND/Astratera-Chronist)**.
+It is an audio player made for session recordings: it joins all the audio parts into one waveform and puts your **markers, music log and
+searchable transcript** on a single timeline. Search for the moment the party met the Hollow King, click the line in the transcript, and
+the recording plays from exactly there. It only reads your session folder, so your recording is never changed.
+
+Record with Weltentor, transcribe with the **Transcribe** button, then open the session folder in Chronist.
+
 ## 💡 Let the lights play along
 
 Build **light scenes** in the Light Designer and attach them to a scene. When the scene starts, the app sends them to your
