@@ -73,6 +73,10 @@ https://app.notion.com/p/Astratera-Weltentor-Guide-401dbb69c39281da9587e72a966c0
 | The Annotate and Blanking menus, opened | |
 | ![Playlist window](docs/images/playlist-manager.png) | ![Recording setup](docs/images/recording-dialog.png) |
 | Build playlists from your genre library | Start a session recording |
+| ![The Transcribe window](docs/images/transcribe-window.png) | ![Special words list](docs/images/transcribe-words.png) |
+| Turn a recording into text, on your own PC | Special words keep names spelled right, grouped by source |
+| ![Players and voices](docs/images/transcribe-players.png) | ![Picking a voice sample from the transcript](docs/images/transcribe-voice-sample.png) |
+| Add players and voice samples so the text says who speaks | Pick a clean sample straight from a transcript |
 
 ## Documentation
 
