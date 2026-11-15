@@ -17,32 +17,14 @@ The tool is free and open source, so enjoy and happy DM'ing.
 Full Documentation: 
 https://app.notion.com/p/Astratera-Weltentor-Guide-401dbb69c39281da9587e72a966c0c0a
 
-## What it can do
+## Run the whole table from one window
 
-* 🖼️ **Projector stage:** build layouts from images and videos, drag, scale and fade them, then show them full screen on your
-  second screen. The DM preview shows exactly what your players see (the green box).
-* 🎬 **Sessions and scenes:** every scene remembers its own music, sounds, visuals, layouts and volumes.
-  **START ALL** starts a whole scene with one click.
-* 🎵 **Music your way:** play from the scene folder, from a genre library (nested folders work), or from a saved **playlist**.
-  Shuffle, reorder, blacklist or whitelist tracks, preview the waveform.
-* 💥 **SFX and Quick Fire:** loop ambience like rain or a crowd, and keep a row of one-shot sounds ready on **Shift+S**.
-* 🖌 **Drawing:** a brush and a rectangle for quick circles and notes on the stage, tucked into a foldable menu.
-* 🔳 **Blanking (optional):** black boxes that hide the secret parts of a map. Off by default. Switch it on for one scene or for all scenes.
-* ❄️ **Freeze Projector:** keep the players' picture steady while you prepare the next one in the preview.
-* ☕ **Break mode:** one click swaps in a break slideshow and music, and brings your scene back afterwards.
-* ⏺ **Session recording with markers:** record the table audio in safe 30-minute chunks, drop 📍 marks with **Ctrl+M**.
-  Layout changes and breaks are marked for you.
-* 🗔 **Mini controls:** a small always-on-top window with next scene, next layout and music buttons.
-* 📝 **Transcription:** turn the recording into text on your own PC (whisper.cpp, nothing is uploaded). A special-words list
-  (typed, imported from Kurator, or built-in D&D terms) keeps names spelled right, and the tool can label **who is speaking**,
-  with player names or as Speaker N / Unknown N. Scene changes and markers are woven into the text.
-* 📜 **Light scripts:** send saved web requests (for example to smart lights) when a scene starts.
-* 🧳 **Portable projects:** everything is saved with relative paths, so you can copy your sessions folder to another PC.
-* 📡 **Remote control:** other tools can drive the app, see [docs/REMOTE_API.md](docs/REMOTE_API.md).
+Every scene remembers its own **music, ambience, pictures, layouts, volumes and light scripts**.
+Press **START ALL** and the tavern fades in, the rain starts, the lights turn warm and the right track begins to play.
+No more alt-tabbing between five programs while your players wait.
 
-> 📖 **Full guide with every panel explained:** [Open the documentation](#documentation)
-
-## A quick tour
+<details>
+<summary><b>A quick tour of the main window</b> (click to open)</summary>
 
 ![Numbered overview of the main window](docs/images/main-window-numbered.png)
 
@@ -63,20 +45,118 @@ https://app.notion.com/p/Astratera-Weltentor-Guide-401dbb69c39281da9587e72a966c0
 | 13 | START ALL | Layout, script, music and SFX in one go |
 | 14 | Foldable menus | **Annotate** (brush, rectangle, clear) and **Blanking** (black boxes). Click to open or close, the tool remembers. |
 
-### More screenshots
+</details>
 
-| | |
-|---|---|
-| ![Blanking and drawing on the preview](docs/images/preview-blanking-annotation.png) | ![Mini controls](docs/images/mini-controls.png) |
-| A blanking box and a red circle drawn on the stage | The always-on-top mini controls |
-| ![The foldable Annotate and Blanking menus](docs/images/toolbar-menus.png) | |
-| The Annotate and Blanking menus, opened | |
-| ![Playlist window](docs/images/playlist-manager.png) | ![Recording setup](docs/images/recording-dialog.png) |
-| Build playlists from your genre library | Start a session recording |
-| ![The Transcribe window](docs/images/transcribe-window.png) | ![Special words list](docs/images/transcribe-words.png) |
-| Turn a recording into text, on your own PC | Special words keep names spelled right, grouped by source |
-| ![Players and voices](docs/images/transcribe-players.png) | ![Picking a voice sample from the transcript](docs/images/transcribe-voice-sample.png) |
-| Add players and voice samples so the text says who speaks | Pick a clean sample straight from a transcript |
+---
+
+## 🖼️ Show your players the world
+
+Build a stage out of **pictures and videos**: drag them around, scale them, fade between layouts, and show the result full screen
+on your second screen or projector. Your own **DM preview** shows exactly what your players see (the green box), so you always
+know what is on the table.
+
+Save an arrangement as a **layout** and fade back to it with a double-click. Need a surprise ready? **Freeze the projector**:
+your players keep seeing the calm tavern while you set up the ambush in the preview.
+
+<table>
+<tr>
+<td width="50%"><img src="docs/images/quick-add.png" alt="Quick Add Visual"><br><sub>Quick Add Visual: put a picture on the stage</sub></td>
+<td width="50%"><img src="docs/images/save-layout.png" alt="Save Layout"><br><sub>Save the current arrangement as a layout</sub></td>
+</tr>
+</table>
+
+## ✏️ Draw on it, hide the secrets
+
+A **brush** and a **rectangle** let you circle the clue or mark where the party stands, right on the stage.
+**Blanking** puts black boxes over the parts of a map your players are not supposed to see yet. It is off by default, and you can
+switch it on for one scene or for all of them. Both live in small foldable menus, so they stay out of your way.
+
+![Blanking and drawing on the preview](docs/images/preview-blanking-annotation.png)
+
+![The foldable Annotate and Blanking menus](docs/images/toolbar-menus.png)
+
+## 🎵 The right music, every time
+
+Play from the scene's own folder, from a **genre library** (nested folders work), or from a **playlist** you built.
+Shuffle it, reorder it, **blacklist** the track you are tired of, and look at the waveform before you play it.
+
+<table>
+<tr>
+<td width="50%"><img src="docs/images/music-manager.png" alt="Music order and filters"><br><sub>Reorder, blacklist or whitelist tracks</sub></td>
+<td width="50%"><img src="docs/images/playlist-manager.png" alt="Playlist window"><br><sub>Build playlists from your genre library</sub></td>
+</tr>
+</table>
+
+## 💥 Thunder on cue
+
+Loop **ambience** like rain, a crowd or a ship's creak, and keep a row of **one-shot sounds** ready on **Quick Fire**
+(open it with **Shift+S**). A door slam, a dragon's roar, a crack of thunder at the perfect moment, one click each.
+
+![Quick Fire](docs/images/quick-fire.png)
+
+## ☕ Break time and 🗔 mini controls
+
+Need a bathroom break? One click swaps in a **break slideshow and music**, and brings your scene back exactly as it was
+when the break is over. The **mini controls** are a small always-on-top window with next scene, next layout and music buttons,
+so you can run the table without switching windows.
+
+![Mini controls](docs/images/mini-controls.png)
+
+## ⏺ Record the session, and never lose the good moments
+
+Record the table audio in safe **30-minute chunks**, so a crash costs you minutes, not the whole evening.
+Press **Ctrl+M** to drop a 📍 mark whenever something great happens ("Grimble reveals the secret!").
+Scene changes, layouts and breaks are marked for you, and the app also keeps a log of what music and sounds played when.
+
+<table>
+<tr>
+<td width="55%"><img src="docs/images/recording-bar.png" alt="The recording bar, idle and recording"><br><sub>Pause, End, Mark and the timer appear while you record</sub></td>
+<td width="45%"><img src="docs/images/recording-dialog.png" alt="Recording setup"><br><sub>Pick a name, a folder and your microphone</sub></td>
+</tr>
+</table>
+
+## 📝 Turn the recording into your session notes
+
+Press **Transcribe** and get your whole session as text, ready for recaps, campaign notes or that one quote nobody remembers right.
+It runs **on your own PC**, nothing is uploaded, and with a mid-range NVIDIA graphics card a three-hour session takes roughly 15 to 45 minutes.
+
+* **Names come out right.** Give it a **special words** list (your NPCs, towns and spells) and the engine spells them the way you do.
+  Import them straight from your campaign notes in **Kurator**, or add a ready-made list of D&D monsters, spells and classes.
+* **It knows who is speaking.** Add your players with a few seconds of their voice, and every line starts with their name.
+  Voices it does not know are still told apart as *Unknown 1*, *Unknown 2*, so you can follow who said what.
+* **Your scenes are in the text.** Scene changes, layouts, breaks and your 📍 marks can be woven in between the sentences, and music changes too if you like.
+
+<table>
+<tr>
+<td width="50%" valign="top"><img src="docs/images/transcribe-window.png" alt="The Transcribe window"><br><sub>Pick the recording, the engine and the model, then press Start</sub></td>
+<td width="50%" valign="top">
+<img src="docs/images/transcribe-words.png" alt="Special words list"><br><sub>Special words keep names spelled right, grouped by where they came from</sub><br><br>
+<img src="docs/images/transcribe-players.png" alt="Players and voices"><br><sub>Add players and voice samples so the text says who speaks</sub>
+</td>
+</tr>
+</table>
+
+![Picking a voice sample from the transcript](docs/images/transcribe-voice-sample.png)
+
+*The tip for a good start:* run your first session without names, pick a few clean lines of each player right from the transcript,
+and run it again. The second run takes seconds, because the listening is not repeated.
+The full walkthrough is in [Transcribing your session](docs/guide/14-transcription.md).
+
+## 💡 Let the lights play along
+
+Build **light scenes** in the Light Designer and attach them to a scene. When the scene starts, the app sends them to your
+smart lights, so the dungeon really goes dark when the torches die. Under the hood these are simple saved **web requests**,
+so you can also trigger other smart things.
+
+<!-- TODO: add the Light Designer screenshot here once it exists:
+![The Light Designer](docs/images/light-designer.png) -->
+
+## 🧳 Take it with you
+
+Everything is saved with **relative paths**, so you can copy your sessions folder to another PC (or a USB stick) and it just works.
+And if you want other tools to talk to the app, there is a small **remote control** interface, see [docs/REMOTE_API.md](docs/REMOTE_API.md).
+
+---
 
 ## Documentation
 
